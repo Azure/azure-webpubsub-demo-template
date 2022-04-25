@@ -1,0 +1,47 @@
+<!-- for more details, see ../docs/how-to-integrate-google-analytics.md -->
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5LSB8YMW7Y"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-5LSB8YMW7Y');
+        
+        // set to 'false' in live-demo branch to enable GA and and set to 'true' it in main branch
+        window['ga-disable-GA_MEASUREMENT_ID'] = false;
+    </script>
+</head>
+<body>
+    <script>
+        function connect(_) {
+            try {
+                var websocket = client.connection = new WebSocket(markedEndpoint, 'json.webpubsub.azure.v1');
+                gtag('event', 'user_activity', {method: 'connect'});
+                websocket.onopen = e => gtag('event', 'user_activity', {method: 'connected'});
+                
+                websocket.onclose = e => {
+                    gtag('event', 'exception', {
+                        description: `Client WebSocket closed. Type: ${e.type}, code: ${e.code}, reason: ${e.reason}, wasClean: ${e.wasClean}.`,
+                        fatal: true
+                    });
+                };
+            } catch (err) {
+                gtag('event', 'exception', {description: err, fatal: true});
+            }
+        }
+
+        function publishMessage(client) {
+            client.connection.send(_);
+            gtag('event', 'user_activity', {method: 'sendToGroup'});
+        }
+
+        function joinGroup(client) {
+            client.connection.send(_);
+            gtag('event', 'user_activity', {method: 'joinGroup'});
+        }
+    </script>
+</body>
+</html>
