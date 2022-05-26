@@ -12,6 +12,7 @@
 
 ## Initialize Google Analytics
 
+### Javascript
 Add the following to `<head>` tag. [View sample here](https://github.com/Azure/azure-webpubsub/blob/8abb6fab77454011a80a235873be92900613147a/docs/demos/clientpubsub.html#L14).
 
 ``` html
@@ -25,6 +26,10 @@ Add the following to `<head>` tag. [View sample here](https://github.com/Azure/a
     </script>
 
 ```
+
+### React
+Step by step [tutorial](https://blog.saeloun.com/2022/02/17/how-to-integrate-react-app-with-google-analytics.html).
+> Please use Google Analytis ID: G-5LSB8YMW7Y
 
 ## Send Data to Google Analytics
 
